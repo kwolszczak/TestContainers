@@ -1,5 +1,6 @@
 package pl.kwolszczak;
 
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.Test;
 import pl.kwolszczak.model.Actor;
@@ -9,12 +10,12 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 class RestTest {
 
 
     @Test
     void getSingleActorById() {
-
         Long id = 3L;
         Actor actorResult =
                 given().log().all()
