@@ -1,6 +1,6 @@
 drop schema public;
 create schema public;
-
+drop table if exists actor;
 
 create table public.actor (
 id numeric primary key null,

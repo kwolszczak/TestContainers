@@ -1,7 +1,7 @@
 package pl.kwolszczak;
 
 import io.micronaut.runtime.EmbeddedApplication;
-import io.micronaut.runtime.Micronaut;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.restassured.common.mapper.TypeRef;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,8 +17,8 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
-//@MicronautTest
-//@MicronautTest(transactional = false, environments = "test", transactionMode = TransactionMode.SEPARATE_TRANSACTIONS)
+@MicronautTest(environments = "test")
+//@MicronautTest(transactional = true, environments = "prod", transactionMode = TransactionMode.SEPARATE_TRANSACTIONS)
 class MyTestContainersTest {
 
     @Container
@@ -27,14 +27,17 @@ class MyTestContainersTest {
     @Inject
     EmbeddedApplication<?> application;
 
-/*    @MockBean(DBConnector.class)
-    DBConnector postgressConnection;*/
+/*   @MockBean(DBConnector.class)
+     DBConnector postgressConnection;*/
 
     @BeforeAll
     static void setUp() throws InterruptedException {
-     Thread.sleep(8000);
+
         System.out.println("start app");
-        Micronaut.run(Application.class);
+        /* ApplicationContext.run(EmbeddedServer.class, "test", "--port=8080", "--datasources.default.url=" + "jdbc:postgresql://localhost:"+postgres.getMappedPort(5432)+"/actor",
+                "--datasources.default.username=" + "postgres",
+                "--datasources.default.password=" + "example",
+                "--datasources.default.driver-class-name=" + "org.postgresql.Driver");*/
 
         /*        application = ApplicationContext.builder("test")
                // .exclude("io.micronaut.configuration.hibernate.jpa", "io.micronaut.configuration.jdbc.hikari", "org.postgresql.jdbc")
@@ -49,7 +52,7 @@ class MyTestContainersTest {
         Long id = 3L;
         Actor actorResult =
                 given().log().all()
-                        .baseUri("http://localhost:8081/myapp")
+                        .baseUri("http://localhost:8081/testapp")
                         .basePath("/actors")
                         .pathParam("id", id)
                         .when().get("/{id}")
@@ -71,7 +74,7 @@ class MyTestContainersTest {
         System.out.println("start test  >>>>>>");
         List<Actor> actors =
                 given().log().all()
-                        .baseUri("http://localhost:8081/myapp")
+                        .baseUri("http://localhost:8081/testapp")
                         .basePath("/actors")
                         .when().get()
                         .then().log().all()

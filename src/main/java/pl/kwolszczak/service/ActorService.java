@@ -18,12 +18,16 @@ public class ActorService {
         return actorRepository.findAll();
     }
 
-    public List<Actor> getAllActorsByName(String firstName) {
-        return actorRepository.findByFirstName(firstName);
-    }
-
     public Optional<Actor> getActorById(Long id) {
         return actorRepository.findById(id);
+    }
+
+    public List<Actor> getAllActorsByName(String name) {
+        return actorRepository.findByFirstName(name);
+    }
+
+    public void removeByName(String firstName){
+        actorRepository.deleteByName(firstName);
     }
 
     public Actor saveActor(Actor actor) {

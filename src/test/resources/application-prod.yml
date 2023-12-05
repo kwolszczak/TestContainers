@@ -1,0 +1,17 @@
+datasources:
+  default:
+    url: jdbc:tc:postgresql:latest:///actor?TC_INITSCRIPT=file:src/test/resources/init-actor.sql?TC_DAEMON=true #start DB Postgres on Random port /localhost: RadnomPort/prodapp
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    minimum-idle: 5
+micronaut:
+  server:
+    #port: -1 #turn off start of application, @MicronautTest automatically starting app
+    port: 8081
+    context-path: /prodapp  # Set your desired context path here
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          #auto: create-drop  #drop all tables after start application
+          auto: none
