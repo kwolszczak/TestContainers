@@ -1,6 +1,7 @@
 package pl.kwolszczak;
 
 import io.micronaut.runtime.EmbeddedApplication;
+import io.micronaut.runtime.Micronaut;
 import io.restassured.common.mapper.TypeRef;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,9 +32,9 @@ class MyTestContainersTest {
 
     @BeforeAll
     static void setUp() throws InterruptedException {
-        //   Thread.sleep(8000);
+     Thread.sleep(8000);
         System.out.println("start app");
-        //  Micronaut.run(Application.class);
+        Micronaut.run(Application.class);
 
         /*        application = ApplicationContext.builder("test")
                // .exclude("io.micronaut.configuration.hibernate.jpa", "io.micronaut.configuration.jdbc.hikari", "org.postgresql.jdbc")
@@ -43,9 +44,8 @@ class MyTestContainersTest {
 
     @Test
     void testItWorks() throws InterruptedException {
-        Thread.sleep(8000);
-        System.out.println("test     >>>>>>");
 
+        System.out.println("test     >>>>>>");
         Long id = 3L;
         Actor actorResult =
                 given().log().all()
@@ -67,10 +67,8 @@ class MyTestContainersTest {
 
     @Test
     void getAllActors() throws InterruptedException {
-        Thread.sleep(8000);
-        System.out.println("start test");
 
-
+        System.out.println("start test  >>>>>>");
         List<Actor> actors =
                 given().log().all()
                         .baseUri("http://localhost:8081/myapp")
