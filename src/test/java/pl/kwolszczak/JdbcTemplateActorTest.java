@@ -1,6 +1,7 @@
 package pl.kwolszczak;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -9,8 +10,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import pl.kwolszczak.DBConnector.DBConnector;
 import pl.kwolszczak.containers.PostgresContainer;
 
+import javax.sql.DataSource;
+
 @Testcontainers
-@MicronautTest(environments = "spring", transactional = false) //transactiona -false and you can write to db after every signle test
+@MicronautTest(environments = "spring")
 class JdbcTemplateActorTest {
 
     @Container
@@ -20,10 +23,10 @@ class JdbcTemplateActorTest {
     private JdbcTemplate jdbcTemplate;
 
 
-/*    @Inject
+    @Inject
     public JdbcTemplateActorTest(DataSource postgresDataSource){
         this.postgresDataSource = postgresDataSource;
-    }*/
+    }
 
     /*   @MockBean(DBConnector.class)
        public DBConnector postgresConnection(){
@@ -33,12 +36,12 @@ class JdbcTemplateActorTest {
             dbConnection.setPassword(postgres.getPassword());
             dbConnection.datacource();
             return dbConnection;
+
+            // postgresDataSource = new DBConnector().datacource();
        }*/
     @Test
     void jdbcTemplate_test() {
-        System.out.println("start test");
-        //    this.jdbcTemplate = new JdbcTemplate(DelegatingDataSource.unwrapDataSource(dataSource));
-        postgresDataSource = new DBConnector().datacource();
+
         jdbcTemplate = new JdbcTemplate(postgresDataSource);
         jdbcTemplate.queryForList("SELECT * FROM Actor AS act WHERE act.firstname = ?", "Brad")
                 .forEach(System.out::println);

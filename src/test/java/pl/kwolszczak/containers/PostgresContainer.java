@@ -25,7 +25,7 @@ public class PostgresContainer {
                 .withPassword(DB_PASSWORD)
               ;
         dockerContainer.withStartupTimeout(Duration.ofMinutes(5));
-        //org.testcontainers.Testcontainers.exposeHostPorts(DB_PORT_BIND);
+      //org.testcontainers.Testcontainers.exposeHostPorts(DB_PORT_BIND);
 
         dockerContainer.withCreateContainerCmdModifier(cmd -> {
             cmd.getHostConfig().withPortBindings(
