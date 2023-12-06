@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import pl.kwolszczak.containers.PostgresContainer;
 import pl.kwolszczak.model.Actor;
 
 import java.util.List;
@@ -19,16 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @MicronautTest(environments = "test")
 //@MicronautTest(transactional = true, environments = "prod", transactionMode = TransactionMode.SEPARATE_TRANSACTIONS)
-class MyTestContainersTest {
+class TestcontainersTest {
 
     @Container
-    private static PostgreSQLContainer<?> postgres = DBConnector.getContainerPostgres();
+    private static PostgreSQLContainer<?> postgres = PostgresContainer.getContainer();
 
     @Inject
     EmbeddedApplication<?> application;
 
-/*   @MockBean(DBConnector.class)
-     DBConnector postgressConnection;*/
 
     @BeforeAll
     static void setUp() throws InterruptedException {
@@ -52,15 +51,14 @@ class MyTestContainersTest {
         Long id = 3L;
         Actor actorResult =
                 given().log().all()
-                        .baseUri("http://localhost:8081/testapp")
+                        .baseUri("http://localhost:8082/testapp")
                         .basePath("/actors")
                         .pathParam("id", id)
-                        .when().get("/{id}")
-                        .then().log().all()
+                .when().get("/{id}")
+                 .then().log().all()
                         .statusCode(200)
                         .extract().as(new TypeRef<Actor>() {
                         });
-
         System.out.println(actorResult);
         String expectedFirstName = "Salma";
 
@@ -74,10 +72,10 @@ class MyTestContainersTest {
         System.out.println("start test  >>>>>>");
         List<Actor> actors =
                 given().log().all()
-                        .baseUri("http://localhost:8081/testapp")
+                        .baseUri("http://localhost:8082/testapp")
                         .basePath("/actors")
-                        .when().get()
-                        .then().log().all()
+                .when().get()
+                .then().log().all()
                         .statusCode(200)
                         .extract().as(new TypeRef<List<Actor>>() {
                         });

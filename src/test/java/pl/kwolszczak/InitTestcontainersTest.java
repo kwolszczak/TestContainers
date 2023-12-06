@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @MicronautTest(environments = "prod")       //use application-prod.yaml environment  and start DB Postgres on Random port /localhost: RadnomPort/prodapp
 class InitTestcontainersTest {
 
-
     @Test
     void testItWorks() {
 
@@ -31,7 +30,6 @@ class InitTestcontainersTest {
                         .statusCode(200)
                         .extract().as(new TypeRef<Actor>() {
                         });
-
         System.out.println(actorResult);
         String expectedFirstName = "Salma";
 

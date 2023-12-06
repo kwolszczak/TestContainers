@@ -22,5 +22,6 @@ public interface ActorRepository extends CrudRepository<Actor,Long> {
     @Query("delete from Actor a where a.firstname = :firstName" )
     void deleteByName(@NonNull String firstName);
 
-
+    @Override
+    <S extends Actor> @NonNull S save(@NonNull S entity);
 }

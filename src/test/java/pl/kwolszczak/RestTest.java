@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RestTest {
 
+
     @Test
     void getSingleActorById() {
         Long id = 3L;
